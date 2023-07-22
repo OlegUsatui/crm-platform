@@ -1,10 +1,11 @@
 {
   "name": "crm-platform",
   "version": "1.0.0",
-  "description": "fullstack platfom with angular and express",
+  "description": "fullstack platform with angular and express",
   "main": "index.js",
   "scripts": {
-    "test": "angular express"
+    "start": "node index",
+    "server": "nodemon index"
   },
   "keywords": [
     "angular",
@@ -14,5 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }

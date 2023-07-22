@@ -1,13 +1,7 @@
-const express = require('express');
+const app = require('./app');
 
-const app = express();
-
-app.get('/', (req, res) => {
-    res.status(200).json({
-        message: 'Working'
-    })
-})
+const port = process.env.PORT || 5000;
 
 app.listen(5000, () => {
-    console.log('Server has been worked')
-})
+    console.log(`Server has been worked on ${port}`)
+});
