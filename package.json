@@ -1,0 +1,18 @@
+{
+  "name": "crm-platform",
+  "version": "1.0.0",
+  "description": "fullstack platfom with angular and express",
+  "main": "index.js",
+  "scripts": {
+    "test": "angular express"
+  },
+  "keywords": [
+    "angular",
+    "express"
+  ],
+  "author": "Oleh Usatyi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
