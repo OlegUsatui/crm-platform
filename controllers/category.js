@@ -39,12 +39,13 @@ module.exports.remove = async function (req, res) {
 }
 
 module.exports.create = async function (req, res) {
+    const category = new Category({
+        name: req.body.name,
+        imgSrc: req.file ? req.file.path : '',
+        user: req.user.id
+    })
     try {
-        const category = await new Category({
-            name: req.body.name,
-            imgSrc: req.body.imgSrc,
-            user: req.user.id
-        }).save()
+        await category.save();
         res.status(201).json(category);
     } catch (err) {
         errorHandler(err, res)
