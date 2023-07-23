@@ -1,0 +1,14 @@
+{
+  "/api/": {
+    "target": "localhost:5000",
+    "secure": false,
+    "loglevel": "debag",
+    "changeOrigin": true
+  },
+  "/uploads/": {
+    "target": "localhost:5000",
+    "secure": false,
+    "loglevel": "debag",
+    "changeOrigin": true
+  }
+}
