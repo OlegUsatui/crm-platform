@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
 import { Subject, takeUntil } from 'rxjs';
+import { MaterializeService } from '../shared/classes/materialize.service';
 
 @Component({
   selector: 'app-login-page',
@@ -37,8 +38,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         this.form.enable()
       },
       (err) => {
-        console.log(err)
-        this.form.enable()
+        MaterializeService.toast(err.error.message);
+        this.form.enable();
       }
     )
   }
