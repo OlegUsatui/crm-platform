@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
+import { MaterializeService } from '../shared/classes/materialize.service';
 
 @Component({
   selector: 'app-register-page',
@@ -15,7 +16,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
-              private route: Router) {
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -35,8 +36,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 
     this.authService.register(this.form.value).pipe(takeUntil(this.destroy$)).subscribe(
       () => {
-        console.log('Success')
-        this.route.navigate(['login'], {
+        this.router.navigate(['login'], {
           queryParams: {
             registered: true
           }
@@ -44,7 +44,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
         this.form.enable()
       },
       (err) => {
-        console.log(err)
+        MaterializeService.toast(err.error.message);
         this.form.enable()
       }
     )

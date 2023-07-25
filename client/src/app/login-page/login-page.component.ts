@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
 import { Subject, takeUntil } from 'rxjs';
 import { MaterializeService } from '../shared/classes/materialize.service';
+import { ActivatedRoute, Params, Route } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -14,6 +15,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   constructor(private fb: FormBuilder,
+              private route: ActivatedRoute,
               private authService: AuthService) {
   }
 
@@ -22,6 +24,13 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     })
+      this.route.queryParams.subscribe((params: Params) => {
+        if (params['registered']) {
+          MaterializeService.toast('Теперь вы можете войти в систему используя свои донные');
+        } else if (params['accessDenied']) {
+          MaterializeService.toast('Для начала авторизуйтесь в системе');
+        }
+      })
   }
 
   ngOnDestroy(): void {
