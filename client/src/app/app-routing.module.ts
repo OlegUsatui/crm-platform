@@ -4,6 +4,8 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { AuthLayoutComponent } from './shared/layouts/auth-layout/auth-layout.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { OverviewPageComponent } from './overview-page/overview-page.component';
+import { SiteLayoutComponent } from './shared/layouts/site-layout/site-layout.component';
 
 const routes: Routes = [
   {
@@ -14,7 +16,8 @@ const routes: Routes = [
     ]
   },
   {
-    path: '', component: AuthLayoutComponent, canActivate: [AuthGuard], children: [
+    path: '', component: SiteLayoutComponent, canActivate: [AuthGuard], children: [
+      { path: 'overview', component: OverviewPageComponent },
     ]
   }
 ];

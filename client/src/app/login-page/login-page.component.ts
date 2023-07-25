@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
 import { Subject, takeUntil } from 'rxjs';
 import { MaterializeService } from '../shared/classes/materialize.service';
-import { ActivatedRoute, Params, Route } from '@angular/router';
+import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -15,6 +15,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   constructor(private fb: FormBuilder,
+              private router: Router,
               private route: ActivatedRoute,
               private authService: AuthService) {
   }
@@ -26,7 +27,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     })
       this.route.queryParams.subscribe((params: Params) => {
         if (params['registered']) {
-          MaterializeService.toast('Теперь вы можете войти в систему используя свои донные');
+          MaterializeService.toast('Теперь вы можете войти в систему используя свои данные');
         } else if (params['accessDenied']) {
           MaterializeService.toast('Для начала авторизуйтесь в системе');
         } else if (params['tokenExpired']) {
@@ -45,8 +46,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
     this.authService.login(this.form.value).pipe(takeUntil(this.destroy$)).subscribe(
       () => {
-        console.log('Success')
-        this.form.enable()
+        this.router.navigate(['/overview'])
       },
       (err) => {
         MaterializeService.toast(err.error.message);
