@@ -25,10 +25,10 @@ module.exports.getById = async function (req, res) {
 
 module.exports.remove = async function (req, res) {
     try {
-        await Category.remove({
+        await Category.deleteOne({
             _id: req.params.id
         })
-        await Position.remove({
+        await Position.deleteOne({
             category: req.params.id
         })
         res.status(200).json({

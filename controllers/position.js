@@ -15,7 +15,7 @@ module.exports.getByCategoryId = async function (req, res) {
 
 module.exports.remove = async function (req, res) {
     try {
-        await Position.remove({
+        await Position.deleteOne({
             _id: req.params.id
         })
         res.status(200).json({

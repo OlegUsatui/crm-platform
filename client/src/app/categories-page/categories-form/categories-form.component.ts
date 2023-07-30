@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { of, switchMap } from 'rxjs';
 import { CategoriesService } from '../../shared/services/categories.service';
@@ -18,7 +18,9 @@ export class CategoriesFormComponent implements OnInit {
   imagePreview: string | ArrayBuffer | null = '';
   isEditMode = false;
   category?: Category;
+
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private fb: FormBuilder,
               private categoriesService: CategoriesService) {
 
@@ -32,14 +34,14 @@ export class CategoriesFormComponent implements OnInit {
     this.form.disable();
 
     this.route.params.pipe(switchMap(params => {
-      if(params['id']) {
+      if (params['id']) {
         this.isEditMode = true;
         return this.categoriesService.getById(params['id'])
       }
       return of(null)
     }))
       .subscribe(category => {
-        if(category) {
+        if (category) {
           this.category = category;
           this.form.patchValue({
             name: category.name
@@ -54,8 +56,8 @@ export class CategoriesFormComponent implements OnInit {
   onSubmit() {
     let obs$;
     this.form.disable();
-    if(this.isEditMode) {
-      obs$ = this.categoriesService.update(this.category!._id as string , this.form.value.name, this.image)
+    if (this.isEditMode) {
+      obs$ = this.categoriesService.update(this.category!._id as string, this.form.value.name, this.image)
     } else {
       obs$ = this.categoriesService.create(this.form.value.name, this.image)
     }
@@ -86,5 +88,17 @@ export class CategoriesFormComponent implements OnInit {
     }
 
     reader.readAsDataURL(file)
+  }
+
+  deleteCategory() {
+    const decision = window.confirm('Ви дійсно хочете видалити категорію');
+
+    if (decision) {
+      this.categoriesService.delete(this.category?._id as string).subscribe(
+        res => MaterializeService.toast(res.message),
+        error => MaterializeService.toast(error.error.message),
+        () => this.router.navigate(['/categories'])
+      )
+    }
   }
 }
