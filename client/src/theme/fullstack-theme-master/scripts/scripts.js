@@ -9,7 +9,7 @@ const $ttp = $('.tooltipped')
 
 if ($tt) {
   const tapTarget = M.TapTarget.init($tt)
-  $('#dashboard-info').addEventListener('click', function() {
+  $('#dashboard-info').addEventListener('click', function () {
     tapTarget.open()
   })
 }
@@ -28,7 +28,7 @@ if ($('.datepicker')) {
 const $filter = $('.js-filter')
 
 if ($filter) {
-  $filter.addEventListener('click', function() {
+  $filter.addEventListener('click', function () {
     $filter.classList.toggle('active')
     $('.js-filter-block').classList.toggle('hide')
   })

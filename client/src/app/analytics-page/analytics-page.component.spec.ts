@@ -8,9 +8,9 @@ describe('AnalyticsPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AnalyticsPageComponent ]
+      declarations: [AnalyticsPageComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AnalyticsPageComponent);
     component = fixture.componentInstance;

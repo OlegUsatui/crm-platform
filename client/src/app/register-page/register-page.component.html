@@ -1,30 +1,30 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="card">
+<form (ngSubmit)="onSubmit()" [formGroup]="form" class="card">
   <div class="card-content">
     <span class="card-title">Создать аккаунт</span>
     <div class="input-field">
       <input
+        [ngClass]="{'invalid': form.get('email')?.touched && form.get('email')?.invalid}"
         formControlName="email"
         id="email"
-        type="email"
         required
-        [ngClass]="{'invalid': form.get('email')?.touched && form.get('email')?.invalid}"
+        type="email"
       >
       <label for="email">Email:</label>
-      <span  class="helper-text red-text" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+      <span *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="helper-text red-text">
         <span *ngIf="form.get('email')?.errors?.['required']">Введите Email</span>
         <span *ngIf="form.get('email')?.errors?.['email']">Вы ввели некорректный Email</span>
       </span>
     </div>
     <div class="input-field">
       <input
+        [ngClass]="{'invalid': form.get('password')?.touched && form.get('password')?.invalid}"
         formControlName="password"
         id="password"
-        type="password"
         required
-        [ngClass]="{'invalid': form.get('password')?.touched && form.get('password')?.invalid}"
+        type="password"
       >
       <label for="password">Пароль:</label>
-      <span  class="helper-text red-text" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+      <span *ngIf="form.get('password')?.touched && form.get('password')?.invalid" class="helper-text red-text">
         <span *ngIf="form.get('password')?.errors?.['required']">Введите пароль</span>
         <span *ngIf="form.get('password')?.errors?.['minlength']">
           Длина пароля должна быть больше {{ form.get('password')?.errors?.['minlength']['requiredLength'] }} символов. Сейчас {{ form.get('password')?.errors?.['minlength']['actualLength'] }}
@@ -34,10 +34,11 @@
   </div>
   <div class="card-action">
     <button
-      type="submit"
-      class="modal-action btn waves-effect"
       [disabled]="form.invalid || form.disabled"
-    >Создать</button>
+      class="modal-action btn waves-effect"
+      type="submit"
+    >Создать
+    </button>
   </div>
 </form>
 

@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     const potentialToken = localStorage.getItem('auth-token');
-    if(potentialToken) {
+    if (potentialToken) {
       this.authService.setToken(potentialToken);
     }
   }

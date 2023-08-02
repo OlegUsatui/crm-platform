@@ -8,9 +8,9 @@ describe('PositionsFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PositionsFormComponent ]
+      declarations: [PositionsFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PositionsFormComponent);
     component = fixture.componentInstance;

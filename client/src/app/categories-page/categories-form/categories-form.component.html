@@ -5,37 +5,37 @@
     {{ isEditMode ? 'Редактировать' : 'Добавить' }} категорию
   </h4>
   <span>
-    <button *ngIf="isEditMode" class="btn btn-small red" (click)="deleteCategory()">
+    <button (click)="deleteCategory()" *ngIf="isEditMode" class="btn btn-small red">
       <i class="material-icons">delete</i>
     </button>
   </span>
 </div>
 
 <div class="row">
-  <form class="col s12 l6" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form" class="col s12 l6">
     <div class="input-field">
       <input
+        [ngClass]="{'invalid': form.get('name')?.touched && form.get('name')?.invalid}"
         formControlName="name"
         id="name"
         type="text"
-        [ngClass]="{'invalid': form.get('name')?.touched && form.get('name')?.invalid}"
       >
       <label for="name">Название</label>
-      <span  class="helper-text red-text" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+      <span *ngIf="form.get('name')?.touched && form.get('name')?.invalid" class="helper-text red-text">
         <span *ngIf="form.get('email')?.errors?.['required']">Введите имя</span>
       </span>
     </div>
 
     <div>
       <input
-        type="file"
-        class="dn"
+        #inputFile
         (change)="onUploadImage($event)"
-        #inputFile/>
+        class="dn"
+        type="file"/>
       <button
-        type="button"
-        class="waves-effect waves-light btn orange lighten-2 mb2"
         (click)="triggerClick()"
+        class="waves-effect waves-light btn orange lighten-2 mb2"
+        type="button"
       >
         <i class="material-icons left">backup</i>
         Загрузить изображение
@@ -44,16 +44,16 @@
 
     <div>
       <button
-        type="submit"
+        [disabled]="form.invalid || form.disabled"
         class="waves-effect waves-light btn"
-        [disabled]="form.invalid || form.disabled">
+        type="submit">
         Сохранить изменения
       </button>
     </div>
   </form>
 
   <div class="col s12 l4 center">
-    <img class="responsive-img h200" [src]="imagePreview" *ngIf="imagePreview">
+    <img *ngIf="imagePreview" [src]="imagePreview" class="responsive-img h200">
   </div>
 </div>
 

@@ -8,9 +8,9 @@ describe('SiteLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SiteLayoutComponent ]
+      declarations: [SiteLayoutComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SiteLayoutComponent);
     component = fixture.componentInstance;

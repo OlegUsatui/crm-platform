@@ -10,7 +10,7 @@ export interface MaterialInstance {
 
 export class MaterializeService {
   static toast(message: string) {
-    M.toast({html: message})
+    M.toast({ html: message })
   }
 
   static initFloatingButton(ref: ElementRef) {
@@ -20,6 +20,7 @@ export class MaterializeService {
   static updateTextInput() {
     M.updateTextFields();
   }
+
   static initModal(ref: ElementRef): MaterialInstance {
     return M.Modal.init(ref.nativeElement)
   }

@@ -8,7 +8,8 @@ import { Position } from '../interfaces/positions.interfaces';
 })
 export class PositionsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getAll(categoryId: string): Observable<Position[]> {
     return this.http.get<Position[]>(`/api/position/${categoryId}`);

@@ -9,14 +9,15 @@ import { Observable, tap } from 'rxjs';
 export class AuthService {
   private token: string | null = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   register(user: User): Observable<User> {
     return this.http.post<User>('/api/auth/register', user)
   }
 
-  login(user: User): Observable<{token: string}> {
-    return this.http.post<{token: string}>('/api/auth/login', user).pipe(
+  login(user: User): Observable<{ token: string }> {
+    return this.http.post<{ token: string }>('/api/auth/login', user).pipe(
       tap(
         ({ token }) => {
           localStorage.setItem('auth-token', token)
@@ -31,7 +32,7 @@ export class AuthService {
     this.setToken(null);
   }
 
-  setToken(token: string| null): void {
+  setToken(token: string | null): void {
     this.token = token;
   }
 

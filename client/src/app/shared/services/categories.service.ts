@@ -9,7 +9,8 @@ import { Message } from '../interfaces/message.interfaces';
 })
 export class CategoriesService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getAll(): Observable<Category[]> {
     return this.http.get<Category[]>('/api/category');
@@ -22,7 +23,7 @@ export class CategoriesService {
   create(name: string, image?: File): Observable<Category> {
     const fd = new FormData();
 
-    if(image) {
+    if (image) {
       fd.append('image', image, image.name)
     }
 
@@ -33,7 +34,7 @@ export class CategoriesService {
   update(id: string, name: string, image?: File): Observable<Category> {
     const fd = new FormData();
 
-    if(image) {
+    if (image) {
       fd.append('image', image, image.name)
     }
 

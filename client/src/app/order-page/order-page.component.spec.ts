@@ -8,9 +8,9 @@ describe('OrderPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OrderPageComponent ]
+      declarations: [OrderPageComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(OrderPageComponent);
     component = fixture.componentInstance;
