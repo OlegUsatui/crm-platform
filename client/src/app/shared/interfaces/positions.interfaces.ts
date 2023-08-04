@@ -4,5 +4,6 @@ export interface Position {
   name: string;
   cost: number;
   category?: string;
-  user?: User
+  user?: User;
+  quantity?: number;
 }
