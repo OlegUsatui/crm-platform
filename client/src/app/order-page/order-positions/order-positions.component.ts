@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, Observable, switchMap } from 'rxjs';
 import { PositionsService } from '../../shared/services/positions.service';
 import { Position } from '../../shared/interfaces/positions.interfaces';
-import { OrderService } from '../../shared/services/order.service';
+import { OrderService } from '../order.service';
 import { MaterializeService } from '../../shared/classes/materialize.service';
 
 @Component({

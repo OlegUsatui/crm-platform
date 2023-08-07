@@ -4,3 +4,10 @@ export interface OrderPosition {
   quantity: number;
   _id?: string;
 }
+
+export interface Order {
+  date?: string;
+  order?: number;
+  list: OrderPosition[];
+  user?: string;
+}

@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Position } from '../interfaces/positions.interfaces';
-import { OrderPosition } from '../interfaces/order.interfaces';
+import { Position } from '../shared/interfaces/positions.interfaces';
+import { OrderPosition } from '../shared/interfaces/order.interfaces';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class OrderService {
   list: OrderPosition[] = [];
   totalPrice = 0;
@@ -28,12 +26,17 @@ export class OrderService {
     this.computePrice()
   }
 
-  remove(orderPosition: OrderPosition) {
+  remove(orderPosition: OrderPosition): void {
     const idx = this.list.findIndex(p => p._id === orderPosition._id);
 
     this.list.splice(idx, 1);
 
     this.computePrice();
+  }
+
+  clear(): void {
+    this.list = [];
+    this.totalPrice = 0;
   }
 
   private computePrice() {
