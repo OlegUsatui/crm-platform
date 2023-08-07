@@ -1,151 +1,35 @@
 <div class="page-title">
-  <h4>История заказов</h4>
-  <button class="btn btn-small js-filter tooltipped" data-tooltip="Открыть фильтр">
+  <h4>History orders</h4>
+  <button
+    #tooltip
+    (click)="isFilterShow = !isFilterShow"
+    class="btn btn-small"
+    data-position="left"
+    data-tooltip="Open filter">
     <i class="material-icons">filter_list</i>
   </button>
 </div>
 
-<div class="filter js-filter-block hide">
-  <div class="fr">
-    <div class="col order">
-      <div class="input-field inline order-position-input">
-        <input id="number" min="1" type="number">
-        <label for="number">Номер заказа</label>
+<app-history-filter *ngIf="isFilterShow"></app-history-filter>
+
+<ng-container *ngIf="!reloading; else reloadingBlock">
+  <ng-container *ngIf="orders.length > 0; else empty">
+    <app-history-list [orders]="orders"></app-history-list>
+
+    <ng-container *ngIf="!loading; else loader">
+      <div *ngIf="!noMoreOrders" class="center mb2">
+        <button (click)="loadMore()" class="btn waves-effect grey darken-1 btn-small">Download more</button>
       </div>
-    </div>
-    <div class="col filter-pickers">
-      <div class="input-field">
-        <input class="datepicker" type="text">
-        <label>Начало</label>
-      </div>
+    </ng-container>
+    <ng-template #loader>
+      <app-loader></app-loader>
+    </ng-template>
+  </ng-container>
+  <ng-template #empty>
+    <span class="center">No orders yet</span>
+  </ng-template>
+</ng-container>
 
-      <div class="input-field">
-        <input class="datepicker" type="text">
-        <label>Конец</label>
-      </div>
-    </div>
-  </div>
-
-  <button class="btn waves-effect wavers-light btn-small">Применить фильтр</button>
-</div>
-
-
-<table class="highlight mb2">
-  <thead>
-  <tr>
-    <th>№</th>
-    <th>Дата</th>
-    <th>Время</th>
-    <th>Сумма</th>
-    <th></th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <tr>
-    <td>1</td>
-    <td>21.12.2000</td>
-    <td>14:21</td>
-    <td>12 211 руб.</td>
-    <td>
-      <button class="btn btn-small modal-trigger grey darken-1" data-target="order-list">
-        <i class="material-icons">open_in_new</i>
-      </button>
-    </td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>21.12.2000</td>
-    <td>14:21</td>
-    <td>12 211 руб.</td>
-    <td>
-      <button class="btn btn-small grey darken-1"><i class="material-icons">open_in_new</i></button>
-    </td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>21.12.2000</td>
-    <td>14:21</td>
-    <td>12 211 руб.</td>
-    <td>
-      <button class="btn btn-small grey darken-1"><i class="material-icons">open_in_new</i></button>
-    </td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>21.12.2000</td>
-    <td>14:21</td>
-    <td>12 211 руб.</td>
-    <td>
-      <button class="btn btn-small grey darken-1"><i class="material-icons">open_in_new</i></button>
-    </td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>21.12.2000</td>
-    <td>14:21</td>
-    <td>12 211 руб.</td>
-    <td>
-      <button class="btn btn-small grey darken-1"><i class="material-icons">open_in_new</i></button>
-    </td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>21.12.2000</td>
-    <td>14:21</td>
-    <td>12 211 руб.</td>
-    <td>
-      <button class="btn btn-small grey darken-1"><i class="material-icons">open_in_new</i></button>
-    </td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>21.12.2000</td>
-    <td>14:21</td>
-    <td>12 211 руб.</td>
-    <td>
-      <button class="btn btn-small grey darken-1"><i class="material-icons">open_in_new</i></button>
-    </td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>21.12.2000</td>
-    <td>14:21</td>
-    <td>12 211 руб.</td>
-    <td>
-      <button class="btn btn-small grey darken-1"><i class="material-icons">open_in_new</i></button>
-    </td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>21.12.2000</td>
-    <td>14:21</td>
-    <td>12 211 руб.</td>
-    <td>
-      <button class="btn btn-small grey darken-1"><i class="material-icons">open_in_new</i></button>
-    </td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>21.12.2000</td>
-    <td>14:21</td>
-    <td>12 211 руб.</td>
-    <td>
-      <button class="btn btn-small grey darken-1"><i class="material-icons">open_in_new</i></button>
-    </td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>21.12.2000</td>
-    <td>14:21</td>
-    <td>12 211 руб.</td>
-    <td>
-      <button class="btn btn-small grey darken-1"><i class="material-icons">open_in_new</i></button>
-    </td>
-  </tr>
-  </tbody>
-</table>
-
-<div class="center mb2">
-  <button class="btn waves-effect grey darken-1 btn-small">Загрузить еще</button>
-</div>
+<ng-template #reloadingBlock>
+  <app-loader></app-loader>
+</ng-template>

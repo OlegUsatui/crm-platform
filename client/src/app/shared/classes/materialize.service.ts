@@ -1,6 +1,6 @@
 import { ElementRef } from '@angular/core';
 
-declare var M: any;
+declare let M: any;
 
 export interface MaterialInstance {
   open: () => void;
@@ -23,5 +23,9 @@ export class MaterializeService {
 
   static initModal(ref: ElementRef): MaterialInstance {
     return M.Modal.init(ref.nativeElement)
+  }
+
+  static initTooltip(ref: ElementRef): MaterialInstance {
+    return M.Tooltip.init(ref.nativeElement)
   }
 }

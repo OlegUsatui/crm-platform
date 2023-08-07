@@ -1,0 +1,25 @@
+<table class="highlight mb2">
+  <thead>
+  <tr>
+    <th>№</th>
+    <th>Date</th>
+    <th>Time</th>
+    <th>Price</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr *ngFor="let order of orders">
+    <td>{{ order.order }}</td>
+    <td>{{ order.date }}</td>
+    <td>14:21</td>
+    <td>${{ order.date }}</td>
+    <td>
+      <button class="btn btn-small modal-trigger grey darken-1" data-target="order-list">
+        <i class="material-icons">open_in_new</i>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
