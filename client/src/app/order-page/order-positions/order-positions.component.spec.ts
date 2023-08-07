@@ -8,9 +8,9 @@ describe('OrderPositionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OrderPositionsComponent ]
+      declarations: [OrderPositionsComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(OrderPositionsComponent);
     component = fixture.componentInstance;
