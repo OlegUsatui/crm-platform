@@ -10,7 +10,7 @@ const orderSchema = new Schema({
         type: Number,
         require: true
     },
-    list: {
+    list: [{
         name: {
             type: String
         },
@@ -20,7 +20,7 @@ const orderSchema = new Schema({
         cost: {
             type: Number
         }
-    },
+    }],
     user: {
         ref: 'user',
         type: Schema.Types.ObjectId

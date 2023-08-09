@@ -12,7 +12,7 @@ import { MaterializeService } from '../shared/classes/materialize.service';
 })
 export class RegisterPageComponent implements OnInit, OnDestroy {
   form!: FormGroup;
-  destroy$ = new Subject();
+  private destroy$ = new Subject<void>();
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
@@ -27,7 +27,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next(null);
+    this.destroy$.next();
     this.destroy$.complete();
   }
 

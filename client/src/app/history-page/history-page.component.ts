@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } fr
 import { MaterialInstance, MaterializeService } from '../shared/classes/materialize.service';
 import { Order } from '../shared/interfaces/order.interfaces';
 import { OrdersService } from '../shared/services/orders.service';
+import { Subject, takeUntil } from 'rxjs';
 
 const STEP = 2;
 
@@ -22,6 +23,8 @@ export class HistoryPageComponent implements OnInit, AfterViewInit, OnDestroy {
   offset = STEP;
   limit = 2;
 
+  destroy$ = new Subject<void>();
+
   constructor(private ordersService: OrdersService) {
   }
 
@@ -36,6 +39,8 @@ export class HistoryPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.tooltip.destroy();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   loadMore() {
@@ -49,13 +54,15 @@ export class HistoryPageComponent implements OnInit, AfterViewInit, OnDestroy {
       offset: this.offset,
       limit: this.limit
     }
-    this.ordersService.getAll(params).subscribe(
-      orders => {
-        this.orders = this.orders.concat(orders);
-        this.noMoreOrders = orders.length < STEP;
-        this.loading = false;
-        this.reloading = false;
-      }
-    )
+    this.ordersService.getAll(params)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        orders => {
+          this.orders = this.orders.concat(orders);
+          this.noMoreOrders = orders.length < STEP;
+          this.loading = false;
+          this.reloading = false;
+        }
+      )
   }
 }

@@ -43,11 +43,10 @@ module.exports.create = async function (req, res) {
             .sort({date: -1})
 
         const maxOrder = lastOrder ? lastOrder.order : 0;
-
         const order = await new Order({
+            order: maxOrder + 1,
             list: req.body.list,
-            user: req.user.id,
-            order: maxOrder + 1
+            user: req.user.id
         }).save();
         res.status(201).json(order)
     } catch (err) {

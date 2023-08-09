@@ -22,6 +22,7 @@ import { OrderCategoriesComponent } from './order-page/order-categories/order-ca
 import { OrderPositionsComponent } from './order-page/order-positions/order-positions.component';
 import { HistoryFilterComponent } from './history-page/history-filter/history-filter.component';
 import { HistoryListComponent } from './history-page/history-list/history-list.component';
+import { ComputePricePipe } from './history-page/compute-price.pipe';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { HistoryListComponent } from './history-page/history-list/history-list.c
     OrderCategoriesComponent,
     OrderPositionsComponent,
     HistoryFilterComponent,
-    HistoryListComponent
+    HistoryListComponent,
+    ComputePricePipe
   ],
   imports: [
     BrowserModule,

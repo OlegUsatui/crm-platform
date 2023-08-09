@@ -4,6 +4,7 @@ import { MaterialInstance, MaterializeService } from '../shared/classes/material
 import { OrderService } from './order.service';
 import { Order, OrderPosition } from '../shared/interfaces/order.interfaces';
 import { OrdersService } from '../shared/services/orders.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-order-page',
@@ -16,6 +17,7 @@ export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
   modal!: MaterialInstance;
   isRoot?: boolean;
   pending = false;
+  private destroy$ = new Subject<void>();
 
   constructor(private router: Router,
               public order: OrderService,
@@ -37,6 +39,8 @@ export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.modal.destroy();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   open(): void {
@@ -57,7 +61,7 @@ export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     }
 
-    this.ordersService.create(order).subscribe(
+    this.ordersService.create(order).pipe(takeUntil(this.destroy$)).subscribe(
       newOrder => {
         MaterializeService.toast(`Order #${newOrder.order} created`);
         this.order.clear();

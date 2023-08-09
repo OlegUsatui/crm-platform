@@ -12,7 +12,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 })
 export class LoginPageComponent implements OnInit, OnDestroy {
   form!: FormGroup;
-  destroy$ = new Subject();
+  private destroy$ = new Subject<void>();
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -37,7 +37,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next(null);
+    this.destroy$.next();
     this.destroy$.complete();
   }
 

@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { of, switchMap } from 'rxjs';
+import { of, Subject, switchMap, takeUntil } from 'rxjs';
 import { CategoriesService } from '../../shared/services/categories.service';
 import { MaterializeService } from '../../shared/classes/materialize.service';
 import { Category } from '../../shared/interfaces/categories.interfaces';
@@ -18,6 +18,7 @@ export class CategoriesFormComponent implements OnInit {
   imagePreview: string | ArrayBuffer | null = '';
   isEditMode = false;
   category?: Category;
+  private destroy$ = new Subject<void>();
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -53,6 +54,11 @@ export class CategoriesFormComponent implements OnInit {
       })
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   onSubmit() {
     let obs$;
     this.form.disable();
@@ -62,7 +68,7 @@ export class CategoriesFormComponent implements OnInit {
       obs$ = this.categoriesService.create(this.form.value.name, this.image)
     }
 
-    obs$.subscribe(
+    obs$.pipe(takeUntil(this.destroy$)).subscribe(
       category => {
         this.category = category;
         MaterializeService.toast('Изменения сохранены');
@@ -94,11 +100,13 @@ export class CategoriesFormComponent implements OnInit {
     const decision = window.confirm('Ви дійсно хочете видалити категорію');
 
     if (decision) {
-      this.categoriesService.delete(this.category?._id as string).subscribe(
-        res => MaterializeService.toast(res.message),
-        error => MaterializeService.toast(error.error.message),
-        () => this.router.navigate(['/categories'])
-      )
+      this.categoriesService.delete(this.category?._id as string)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          res => MaterializeService.toast(res.message),
+          error => MaterializeService.toast(error.error.message),
+          () => this.router.navigate(['/categories'])
+        )
     }
   }
 }
