@@ -3,6 +3,7 @@ import { MaterialInstance, MaterializeService } from '../shared/classes/material
 import { Order } from '../shared/interfaces/order.interfaces';
 import { OrdersService } from '../shared/services/orders.service';
 import { Subject, takeUntil } from 'rxjs';
+import { Filter } from '../shared/interfaces/filter';
 
 const STEP = 2;
 
@@ -19,6 +20,7 @@ export class HistoryPageComponent implements OnInit, AfterViewInit, OnDestroy {
   loading = false;
   reloading = false;
   noMoreOrders = false;
+  filter: Filter = {};
 
   offset = STEP;
   limit = 2;
@@ -49,11 +51,25 @@ export class HistoryPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fetch();
   }
 
+  applyFilter(filter: Filter): void {
+    this.orders = [];
+    this.offset = 0;
+    this.filter = filter;
+    this.reloading = true;
+    this.fetch();
+  }
+
+  isFiltered(): boolean {
+    return Object.keys(this.filter).length !== 0
+  }
+
   private fetch() {
     const params = {
+      ...this.filter,
       offset: this.offset,
       limit: this.limit
-    }
+    };
+
     this.ordersService.getAll(params)
       .pipe(takeUntil(this.destroy$))
       .subscribe(

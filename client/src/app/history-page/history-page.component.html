@@ -3,6 +3,10 @@
   <button
     #tooltip
     (click)="isFilterShow = !isFilterShow"
+    [ngClass]="{
+    'active': isFilterShow,
+    red: isFiltered()
+    }"
     class="btn btn-small"
     data-position="left"
     data-tooltip="Open filter">
@@ -10,7 +14,10 @@
   </button>
 </div>
 
-<app-history-filter *ngIf="isFilterShow"></app-history-filter>
+<app-history-filter
+  (filter)="applyFilter($event)"
+  *ngIf="isFilterShow"
+></app-history-filter>
 
 <ng-container *ngIf="!reloading; else reloadingBlock">
   <ng-container *ngIf="orders.length > 0; else empty">
