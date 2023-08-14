@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { of, Subject, switchMap, takeUntil } from 'rxjs';
@@ -11,7 +11,7 @@ import { Category } from '../../shared/interfaces/categories.interfaces';
   templateUrl: './categories-form.component.html',
   styleUrls: ['./categories-form.component.scss']
 })
-export class CategoriesFormComponent implements OnInit {
+export class CategoriesFormComponent implements OnInit, OnDestroy {
   @ViewChild('inputFile') fileInputRef!: ElementRef;
   form!: FormGroup;
   image?: File;
