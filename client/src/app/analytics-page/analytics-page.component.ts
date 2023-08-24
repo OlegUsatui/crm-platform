@@ -28,9 +28,10 @@ export class AnalyticsPageComponent implements AfterViewInit, OnDestroy {
       color: 'rgb(255, 99, 132)'
     };
     const orderConfig: any = {
-      label: 'Gain',
+      label: 'Order',
       color: 'rgb(54, 162, 235)'
     };
+    
     this.service.getAnalytics().pipe(takeUntil(this.destroy$)).subscribe((data) => {
       this.average = data.average;
 
