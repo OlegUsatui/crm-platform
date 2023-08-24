@@ -1,21 +1,30 @@
 <div class="page-title">
   <h4>
-    Обзор за вчера (09.04.2018)
-    <i class="material-icons black-text pointer" id="dashboard-info">info_outline</i>
+    Review for yesterday ({{ yesterday | date: 'dd.MM.yyyy'}})
   </h4>
 </div>
 
-<div class="row">
+<div *ngIf="data$ | async as data; else loader" class="row">
   <div class="col s12 l6">
     <div class="card light-blue lighten-2 white-text">
       <div class="card-content">
-        <span class="card-title">Выручка:</span>
-        <h3>20 000 руб.</h3>
-        <h3 class="green-text text-darken-2 m0 mb1">
-          <i class="material-icons">arrow_upward</i>
-          26%
+        <span class="card-title">Revenue:</span>
+        <h3>${{ data.gain.yesterday }}</h3>
+        <h3
+          [ngClass]="{
+          'green-text text-darken-2': data.gain.isHigher,
+          'red-text': !data.gain.isHigher
+          }"
+          class="m0 mb1"
+        >
+          <i class="material-icons">
+            {{ data.gain.isHigher ? 'arrow_upward' : 'arrow_downward' }}
+          </i>
+          {{ data.gain.percent }}%
         </h3>
-        <p>Выручка вашего бизнеса вчера на 20% выше среднего: 5555 руб. в день</p>
+        <p>Your business's revenue yesterday was {{ data.gain.percent }}% {{ data.gain.isHigher ? 'above' : 'below' }}
+          average:
+          ${{ data.gain.compare }}  per day</p>
       </div>
     </div>
   </div>
@@ -23,14 +32,26 @@
   <div class="col s12 l6">
     <div class="card orange lighten-2 white-text">
       <div class="card-content">
-        <span class="card-title">Заказы:</span>
-        <h3>200 зак.</h3>
-        <h3 class="red-text m0 mb1">
-          <i class="material-icons">arrow_downward</i>
-          26%
+        <span class="card-title">Orders:</span>
+        <h3>{{ data.orders.yesterday}} ord.</h3>
+        <h3
+          [ngClass]="{
+          'green-text text-darken-2': data.orders.isHigher,
+          'red-text': !data.orders.isHigher
+          }"
+          class="m0 mb1">
+          <i class="material-icons">
+            {{ data.orders.isHigher ? 'arrow_upward' : 'arrow_downward' }}
+          </i>
+          {{ data.orders.percent }}%
         </h3>
-        <p>Число заказов вчера на 26% ниже среднего значения: 3 зак. в день</p>
+        <p>The number of orders yesterday is {{ data.orders.percent }}% {{ data.orders.isHigher ? 'above' : 'below' }}
+          than the average: {{ data.orders.compare }} ord. per day</p>
       </div>
     </div>
   </div>
 </div>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
